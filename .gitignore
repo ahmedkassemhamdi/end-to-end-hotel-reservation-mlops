@@ -1,0 +1,42 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+env/
+venv/
+ENV/
+
+# VS Code
+.vscode/
+
+# Data 
+data/processed/
+data/raw/
+!data/processed/.gitignore
+!data/raw/.gitignore
+
+# Models 
+models/
+!models/.gitignore
+
+# MLflow
+mlflow.db
+mlruns/
+
+# DVC local cache (NEVER upload this)
+.dvc/cache/
+.dvc/tmp/
+.dvc/config.local
+
+# Artifacts & Plots
+artifact/*.png
+
+# Logs
+logs/*.log
+
+# Operating System files
+.DS_Store
+Thumbs.db

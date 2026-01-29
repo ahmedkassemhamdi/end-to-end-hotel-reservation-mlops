@@ -1,0 +1,134 @@
+schema: '2.0'
+stages:
+  load_data:
+    cmd: python -m src.load_data
+    deps:
+    - path: data/raw/Hotel Reservations.csv
+      hash: md5
+      md5: 922b55cf208d0549792548e5a3cff6f5
+      size: 3240604
+    - path: src/load_data.py
+      hash: md5
+      md5: f34db81f2e1be3bb942cd461d198b8e7
+      size: 683
+    outs:
+    - path: data/processed/hotel_data.csv
+      hash: md5
+      md5: 5ddb18949e025caef85502c4b1e6de11
+      size: 3481135
+  validate_data:
+    cmd: python -m src.validate_data
+    deps:
+    - path: data/processed/hotel_data.csv
+      hash: md5
+      md5: 5ddb18949e025caef85502c4b1e6de11
+      size: 3481135
+    - path: src/validate_data.py
+      hash: md5
+      md5: a9078bc803f3d45583b26ccdba717805
+      size: 3307
+    outs:
+    - path: data/processed/validated_data.csv
+      hash: md5
+      md5: 6c33b341c772b81e4eb57b1936543197
+      size: 3347144
+  feature_engineering:
+    cmd: python -m src.feature_engineering
+    deps:
+    - path: data/processed/validated_data.csv
+      hash: md5
+      md5: 6c33b341c772b81e4eb57b1936543197
+      size: 3347144
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: 5ff28dcf1442b178a25c5800c588d96b
+      size: 1232
+    outs:
+    - path: data/processed/feature_engineered_data.csv
+      hash: md5
+      md5: 1b43bafc3862bfe0c2859907e0603218
+      size: 3949744
+  split_data:
+    cmd: python -m src.split_data
+    deps:
+    - path: data/processed/feature_engineered_data.csv
+      hash: md5
+      md5: 1b43bafc3862bfe0c2859907e0603218
+      size: 3949744
+    - path: src/split_data.py
+      hash: md5
+      md5: 75c0464a2660cd1f11ac98d38aaca592
+      size: 1145
+    outs:
+    - path: data/processed/x.csv
+      hash: md5
+      md5: de5b88029039ec3bdcc1438a40b982c2
+      size: 3176876
+    - path: data/processed/y.csv
+      hash: md5
+      md5: f8bb28ffbb924ccabebe26766ddd42e4
+      size: 108833
+  preprocessing:
+    cmd: python -m src.preprocessing
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 29c36632b5ac5aef2fb41485b2c4d8d7
+      size: 810
+    - path: src/preprocessing.py
+      hash: md5
+      md5: 85b3fd0db0c7ad3ad0d7f9954ee0e1ba
+      size: 1895
+    outs:
+    - path: models/prepipeline.pkl
+      hash: md5
+      md5: d57f167e69f0184a067d1ab0326eedf2
+      size: 1416
+  train:
+    cmd: python -m src.xgboost_model
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 29c36632b5ac5aef2fb41485b2c4d8d7
+      size: 810
+    - path: data/processed/x.csv
+      hash: md5
+      md5: de5b88029039ec3bdcc1438a40b982c2
+      size: 3176876
+    - path: data/processed/y.csv
+      hash: md5
+      md5: f8bb28ffbb924ccabebe26766ddd42e4
+      size: 108833
+    - path: models/prepipeline.pkl
+      hash: md5
+      md5: d57f167e69f0184a067d1ab0326eedf2
+      size: 1416
+    - path: src/evaluation.py
+      hash: md5
+      md5: 812532e98f11a555ddd390d32dbf29fd
+      size: 2906
+    - path: src/xgboost_model.py
+      hash: md5
+      md5: aaed1baf732b69ba9c4b43015804eeaa
+      size: 4977
+    outs:
+    - path: artifact/conf_matrix.png
+      hash: md5
+      md5: 72493aa652b9b9c7a05a4bac56395afe
+      size: 23684
+    - path: artifact/roc_auc.png
+      hash: md5
+      md5: c1062105fd711662985f6e40d7fabf84
+      size: 34206
+    - path: data/processed/y_pred.csv
+      hash: md5
+      md5: 06adfad2d4e6ec486b4c64a7012d993a
+      size: 108833
+    - path: data/processed/y_proba.csv
+      hash: md5
+      md5: 56c04b73c44a9a058b2ec370a63d5f5b
+      size: 802333
+    - path: models/xgb_model.pkl
+      hash: md5
+      md5: 54df3aeda0cb69e17d210b59fda96281
+      size: 424948

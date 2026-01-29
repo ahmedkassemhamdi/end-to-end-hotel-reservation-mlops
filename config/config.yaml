@@ -1,0 +1,39 @@
+preprocessing:
+  st_cols:
+    - 'no_of_adults'
+    - 'no_of_children'
+    - 'no_of_weekend_nights'
+    - 'no_of_week_nights'
+    - 'arrival_year'
+    - 'arrival_month'
+    - 'arrival_date'
+    - 'no_of_previous_cancellations'
+    - 'no_of_previous_bookings_not_canceled'   
+    - 'no_of_special_requests'
+    - 'total_guests'
+    - 'total_nights'
+  ro_cols:
+    - 'lead_time'
+    - "avg_price_per_room"
+    - "price_per_night"
+  ohe_cols:
+    - "type_of_meal_plan"
+    - "room_type_reserved"
+    - "market_segment_type"
+  ready_cols:
+    - "repeated_guest"
+    - "required_car_parking_space"
+    - "is_weekend_only"
+
+
+
+
+xgb_params:
+  n_estimators: 100
+  max_depth: 6
+  learning_rate: 0.01
+  subsample: 1.0
+  colsample_bytree: 1.0
+  gamma: 0
+  n_jobs: 0
+  random_state: 0

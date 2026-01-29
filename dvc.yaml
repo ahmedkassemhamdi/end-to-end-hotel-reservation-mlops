@@ -1,0 +1,58 @@
+stages:
+  load_data:
+    cmd: python -m src.load_data
+    deps:
+      - src/load_data.py
+      - data/raw/Hotel Reservations.csv
+    outs:
+      - data/processed/hotel_data.csv
+
+  validate_data:
+    cmd: python -m src.validate_data
+    deps:
+      - src/validate_data.py
+      - data/processed/hotel_data.csv
+    outs:
+      - data/processed/validated_data.csv
+
+  feature_engineering:
+    cmd: python -m src.feature_engineering
+    deps:
+      - src/feature_engineering.py
+      - data/processed/validated_data.csv
+    outs:
+      - data/processed/feature_engineered_data.csv
+
+  split_data:
+    cmd: python -m src.split_data
+    deps:
+      - src/split_data.py
+      - data/processed/feature_engineered_data.csv
+    outs:
+      - data/processed/x.csv
+      - data/processed/y.csv
+
+  preprocessing:
+    cmd: python -m src.preprocessing
+    deps:
+      - src/preprocessing.py
+      - config/config.yaml
+    outs:
+      - models/prepipeline.pkl
+
+  train:
+    cmd: python -m src.xgboost_model
+    deps:
+      - src/xgboost_model.py
+      - src/evaluation.py
+      - data/processed/x.csv
+      - data/processed/y.csv
+      - models/prepipeline.pkl
+      - config/config.yaml
+    outs:
+      - models/xgb_model.pkl
+      - data/processed/y_pred.csv
+      - data/processed/y_proba.csv
+    plots:
+      - artifact/conf_matrix.png
+      - artifact/roc_auc.png
