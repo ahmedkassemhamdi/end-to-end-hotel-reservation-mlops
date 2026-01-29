@@ -1,0 +1,37 @@
+# Byte-compiled / Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter notebooks and development tools
+notebooks/
+*.ipynb
+.vscode/
+.pytest_cache/
+
+# Data and Artifacts 
+data/
+artifact/
+
+
+# Logs and Tracking
+logs/
+*.log
+mlflow.db
+mlruns/
+
+# DVC (Metadata not needed inside the container)
+.dvc/
+.dvcignore
+# Keep dvc.lock/yaml only if you run dvc commands inside container (rare)
+dvc.lock
+dvc.yaml
+
+# Version Control
+.git/
+.gitignore
+
+# Environments
+venv/
+.env
