@@ -32,7 +32,7 @@ with st.form("prediction_form"):
         st.subheader("💰 Room & Finance")
         avg_price_per_room = st.number_input("Avg Price per Room ($)", min_value=0.0, value=100.0)
         room_type_reserved = st.selectbox("Room Type", ["Room_Type 1", "Room_Type 2", "Room_Type 4", "Room_Type 5", "Room_Type 6", "Room_Type 7"])
-        type_of_meal_plan = st.selectbox("Meal Plan", ["Meal Plan 1", "Meal Plan 2", "Not Selected"])
+        type_of_meal_plan = st.selectbox("Meal Plan", ["Meal Plan 1", "Meal Plan 2","Meal Plan 3", "Not Selected"])
         no_of_weekend_nights = st.number_input("Weekend Nights", min_value=0, value=1)
         no_of_week_nights = st.number_input("Week Nights", min_value=0, value=2)
 
