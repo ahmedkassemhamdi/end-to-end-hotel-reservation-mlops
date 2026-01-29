@@ -29,11 +29,17 @@ async def predict_cancellation(data: HotelReservationInput):
         df['price_per_night'] = df['avg_price_per_room']
         df['is_weekend_only'] = (df['no_of_week_nights'] == 0).astype(int)
 
-        pred = model.predict(df)[0]
+        y_prob = model.predict_proba(df)[0, 1]
 
+        threshold = 0.55 
+        custom_pred = 1 if y_prob >= threshold else 0
+
+        prediction_label = "Not Canceled" if custom_pred == 1 else "Canceled"
+        
         return {
-            "prediction_code": int(pred),
-            "prediction_label": "Canceled" if pred == 1 else "Not Canceled"
+            "prediction_code": int(custom_pred),
+            "prediction_label": prediction_label,
+            "probability": round(float(y_prob), 3)
         }
 
     except Exception as e:
