@@ -10,3 +10,8 @@ lightgbm==4.6.0
 pandera==0.29.0
 mlflow==3.9.0
 dvc==3.66.1
+pydantic==2.12.5
+fastapi[standard]==0.128.0
+uvicorn[standard]==0.40.0
+pytest==9.0.2
+httpx==0.28.1
